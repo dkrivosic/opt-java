@@ -60,4 +60,27 @@ public class BitVector {
 		boolean copy[] = Arrays.copyOf(bits, getSize());
 		return new MutableBitVector(copy);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof BitVector)) return false;
+		BitVector that = (BitVector) obj;
+		if(this.getSize() != that.getSize()) return false;
+		
+		for(int i = 0; i < this.getSize(); i++) {
+			if(this.get(i) != that.get(i)) return false;
+		}
+		
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		long h = 1234;
+	      for (int i = bits.length; --i >= 0; ) {
+	    	  int num = bits[i] ? 1 : 0;
+	           h ^= num * (i + 1);
+	      }
+	      return (int)((h >> 32) ^ h);
+	}
 }

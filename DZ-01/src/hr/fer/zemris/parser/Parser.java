@@ -14,10 +14,11 @@ public class Parser {
 	}
 
 	public void parseLine(String str) {
+		str = str.trim();
 		if (str.isEmpty() || str.startsWith("c"))
 			return;
 		if (str.startsWith("p")) {
-			String[] tmp = str.split(" ");
+			String[] tmp = str.split("( )+");
 			numberOfVariables = Integer.parseInt(tmp[2]);
 			numberOfClauses = Integer.parseInt(tmp[3]);
 			clauses = new Clause[numberOfClauses];

@@ -7,13 +7,15 @@ import java.util.Iterator;
  */
 public class BitVectorNGenerator implements Iterable<MutableBitVector> {
 	private BitVector assignment;
-	private MutableBitVector[] neighbours;
 
 	public BitVectorNGenerator(BitVector assignment) {
 		this.assignment = assignment;
-		neighbours = createNeighbourhood();
 	}
 
+	/**
+	 * Returns iterator which generates new neighbour every time
+	 * <code>next()</code> is called.
+	 */
 	@Override
 	public Iterator<MutableBitVector> iterator() {
 		Iterator<MutableBitVector> it = new Iterator<MutableBitVector>() {
@@ -22,12 +24,15 @@ public class BitVectorNGenerator implements Iterable<MutableBitVector> {
 
 			@Override
 			public boolean hasNext() {
-				return neighbours != null && currentIndex < neighbours.length;
+				return currentIndex < assignment.getSize();
 			}
 
 			@Override
 			public MutableBitVector next() {
-				return neighbours[currentIndex++];
+				MutableBitVector next = assignment.copy();
+				next.set(currentIndex, !assignment.get(currentIndex));
+				currentIndex++;
+				return next;
 			}
 		};
 		return it;
@@ -38,12 +43,8 @@ public class BitVectorNGenerator implements Iterable<MutableBitVector> {
 	 * called, it will return cached array of neighbours.
 	 */
 	public MutableBitVector[] createNeighbourhood() {
-		if (neighbours != null) {
-			return neighbours;
-		}
-
 		int n = assignment.getSize();
-		neighbours = new MutableBitVector[n];
+		MutableBitVector neighbours[] = new MutableBitVector[n];
 		for (int i = 0; i < n; i++) {
 			MutableBitVector tmp = assignment.copy();
 			tmp.set(i, !tmp.get(i));

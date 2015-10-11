@@ -49,7 +49,7 @@ public class SATFormula {
 	public String toString() {
 		String str = "";
 		for (Clause clause : clauses) {
-			str += clause.toString() + " ";
+			str += clause.toString();
 		}
 		return str;
 	}

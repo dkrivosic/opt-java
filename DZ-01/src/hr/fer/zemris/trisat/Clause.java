@@ -33,10 +33,11 @@ public class Clause {
 	public boolean isSatisfied(BitVector assignment) {
 		boolean satisfied = false;
 		for (int literal : literals) {
+			int index = Math.abs(literal) - 1;
 			if (literal >= 0) {
-				satisfied = satisfied || assignment.get(literal);
+				satisfied = satisfied || assignment.get(index);
 			} else {
-				satisfied = satisfied || !assignment.get(literal);
+				satisfied = satisfied || !assignment.get(index);
 			}
 		}
 		return satisfied;
