@@ -2,9 +2,12 @@ package hr.fer.zemris.trisat;
 
 import java.util.Comparator;
 
+/**
+ * Comparator that uses SAT formula statistics to compare formula solutions.
+ */
 public class MutableBitVectorComp implements Comparator<MutableBitVector> {
 	private SATFormulaStats stats;
-	
+
 	public MutableBitVectorComp(SATFormulaStats stats) {
 		this.stats = stats;
 	}
@@ -16,9 +19,9 @@ public class MutableBitVectorComp implements Comparator<MutableBitVector> {
 		stats.setAssignment(o2, false);
 		double second = stats.getPercentageBonus();
 		int ret = 0;
-		if(first - second > 0) {
+		if (first - second > 0) {
 			ret = -1;
-		} else if(first - second < 0) {
+		} else if (first - second < 0) {
 			ret = 1;
 		}
 		return ret;

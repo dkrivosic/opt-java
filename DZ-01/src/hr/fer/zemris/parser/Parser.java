@@ -3,6 +3,9 @@ package hr.fer.zemris.parser;
 import hr.fer.zemris.trisat.Clause;
 import hr.fer.zemris.trisat.SATFormula;
 
+/**
+ * Used for parsing input file.
+ */
 public class Parser {
 	private int numberOfVariables;
 	private int numberOfClauses;
@@ -13,6 +16,10 @@ public class Parser {
 		this.index = 0;
 	}
 
+	/**
+	 * Parses one line of input file. It ignores comments and empty lines.
+	 * Clauses are saved to <code>clauses</code> array.
+	 */
 	public void parseLine(String str) {
 		str = str.trim();
 		if (str.isEmpty() || str.startsWith("c"))

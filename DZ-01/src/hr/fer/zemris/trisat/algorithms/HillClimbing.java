@@ -24,7 +24,6 @@ public class HillClimbing implements Algorithm {
 	public void run() {
 		Random rand = new Random(System.currentTimeMillis());
 		BitVector x = new BitVector(rand, formula.getNumberOFVariables());
-		BitVector xx;
 		int iter = 0;
 		do {
 			MutableBitVector neighbours[] = new BitVectorNGenerator(x).createNeighbourhood();
@@ -49,11 +48,7 @@ public class HillClimbing implements Algorithm {
 				return;
 			}
 
-			// Pick random best neighbour
-			xx = x;
 			x = best.get(rand.nextInt(best.size()));
-			if (x.equals(xx))
-				break; // ???
 
 			if (formula.isSatisfied(x)) {
 				System.out.println("Solution: " + x);

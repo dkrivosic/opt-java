@@ -12,30 +12,41 @@ import hr.fer.zemris.trisat.algorithms.BruteForce;
 import hr.fer.zemris.trisat.algorithms.HillClimbing;
 import hr.fer.zemris.trisat.algorithms.StatAlgorithm;
 
+/**
+ * Class used for running algorithms.
+ */
 public class TriSatSolver {
 
+	/**
+	 * Method takes two command line arguments. First one is a choice of
+	 * algorithm (1-3) and second is a path to the file which contains formula
+	 * description.
+	 * 
+	 * @throws IOException
+	 *             if given path does not exist.
+	 */
 	public static void main(String[] args) throws IOException {
-		if(args.length != 2) {
+		if (args.length != 2) {
 			System.err.println("2 arguments expected");
 			System.exit(0);
 		}
-		
+
 		int choice = Integer.parseInt(args[0]);
 		String path = args[1];
 		Parser parser = new Parser();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
-		
+
 		String line = reader.readLine();
-		while(!line.startsWith("%")) {
+		while (!line.startsWith("%")) {
 			parser.parseLine(line);
 			line = reader.readLine();
 		}
-		
+
 		reader.close();
-		SATFormula  formula = parser.generateFormula();
+		SATFormula formula = parser.generateFormula();
 		Algorithm algorithm = null;
-		
-		switch(choice) {
+
+		switch (choice) {
 		case 1:
 			algorithm = new BruteForce(formula);
 			break;
@@ -49,11 +60,10 @@ public class TriSatSolver {
 			System.out.println("Choose algorithm 1-3");
 			System.exit(0);
 			break;
-				
+
 		}
 		algorithm.run();
-		
-		
+
 	}
 
 }
