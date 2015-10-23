@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Jama.Matrix;
 
@@ -56,6 +57,7 @@ public class Prijenosna {
 			solution.set(i, 0, 0);
 
 		Matrix coef = Matrix.random(6, 1);
+		
 		ErrorFunctionPrijenosna err = new ErrorFunctionPrijenosna(x, y, m);
 
 		if (method.equals("grad")) {
