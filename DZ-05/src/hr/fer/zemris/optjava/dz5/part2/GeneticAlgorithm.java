@@ -22,6 +22,14 @@ import hr.fer.zemris.optjava.dz5.part2.selection.RouletteWheelSelection;
 public class GeneticAlgorithm {
 
 	public static void main(String[] args) throws FileNotFoundException {
+		if (args.length != 8) {
+			System.out.println("8 arguments expected:\npath to file with problem description"
+					+ "\nTotal number of chromosomes \nInitial number of populations"
+					+ "\nsuccess ratio \nmax selection pressure \nmax iterations"
+					+ "\nConstant comparison factor? (true/false) \nconstant factor or delta");
+			System.exit(0);
+		}
+
 		Random random = new Random();
 		CostFunction function = CostFunction.readFromFile(args[0]);
 		int n = function.getN();
@@ -29,13 +37,20 @@ public class GeneticAlgorithm {
 		IMutation mutation = new SwapMutation();
 		ISelection firstSelection = new RouletteWheelSelection(random);
 		ISelection secondSelection = new RandomSelection(random);
-		CompFactorPlan compFactorPlan = new CompFactorPlan(0, 1, 0.01);
+		boolean constant = Boolean.parseBoolean(args[6]);
+		double comp = Double.parseDouble(args[7]);
+		CompFactorPlan compFactorPlan;
+		if (constant) {
+			compFactorPlan = new CompFactorPlan(comp);
+		} else {
+			compFactorPlan = new CompFactorPlan(0, 1, comp);
+		}
 
-		final int maxIterations = 100;
-		final double maxSelPress = 300;
-		final double succRatio = 0.4;
-		int totalPopSize = 1000;
-		int numberOfPop = 10;
+		final int maxIterations = Integer.parseInt(args[5]);
+		final double maxSelPress = Integer.parseInt(args[4]);
+		final double succRatio = Double.parseDouble(args[3]);
+		int totalPopSize = Integer.parseInt(args[1]);
+		int numberOfPop = Integer.parseInt(args[2]);
 
 		OffspringSelectionGA os = new OffspringSelectionGA(maxIterations, maxSelPress, succRatio, firstSelection,
 				secondSelection, crossover, mutation, function, compFactorPlan);
