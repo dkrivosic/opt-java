@@ -1,0 +1,3 @@
+07-iris-formatirano.data pso-a 60 0.02 1000
+07-iris-formatirano.data pso-b-6 40 0.02 2000
+07-iris-formatirano.data clonalg 30 0.02 500
