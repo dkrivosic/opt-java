@@ -72,7 +72,8 @@ public class MOOP {
 		double sigma = 4;
 		double sigmaShare = 0.1;
 		double alpha = 3;
-		Evaluator evaluator = new Evaluator(moop, epsilon, decisionSpace, alpha, sigmaShare);
+		Evaluator evaluator = new Evaluator(moop, epsilon, decisionSpace, alpha, sigmaShare, hardConstraints.xmin,
+				hardConstraints.xmax);
 		ISelection selection = new RouletteWheelSelection();
 		ICrossover crossover = new ArithmeticalCrossover(0.5);
 		IMutation mutation = new Mutation(sigma);

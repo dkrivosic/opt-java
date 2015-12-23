@@ -1,7 +1,6 @@
 package hr.fer.zemris.optjava.dz9.moop;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -13,13 +12,18 @@ public class Evaluator {
 	private boolean decisionSpace;
 	private double alpha;
 	private double sigmaShare;
+	private double[] xmin;
+	private double[] xmax;
 
-	public Evaluator(MOOPProblem moop, double epsilon, boolean decisionSpace, double alpha, double sigmaShare) {
+	public Evaluator(MOOPProblem moop, double epsilon, boolean decisionSpace, double alpha, double sigmaShare,
+			double[] xmin, double[] xmax) {
 		this.moop = moop;
 		this.epsilon = epsilon;
 		this.decisionSpace = decisionSpace;
 		this.alpha = alpha;
 		this.sigmaShare = sigmaShare;
+		this.xmin = xmin;
+		this.xmax = xmax;
 	}
 
 	public List<List<Chromosome>> evaluatePopulation(List<Chromosome> population) {
@@ -31,41 +35,14 @@ public class Evaluator {
 		double N = fronts.size();
 		double Fmin = N + epsilon;
 
-		int dimension = 0;
-		if (decisionSpace) {
-			dimension = fronts.get(0).get(0).solution.length;
-		} else {
-			dimension = fronts.get(0).get(0).objective.length;
-		}
-
 		for (List<Chromosome> front : fronts) {
-			// Find min and max values
-			double[] xmin = new double[dimension];
-			double[] xmax = new double[dimension];
-			Arrays.fill(xmin, Integer.MAX_VALUE);
-			Arrays.fill(xmax, Integer.MIN_VALUE);
-			for (Chromosome c : front) {
-				for (int i = 0; i < dimension; i++) {
-					if (decisionSpace) {
-						if (c.solution[i] < xmin[i])
-							xmin[i] = c.solution[i];
-						if (c.solution[i] > xmax[i])
-							xmax[i] = c.solution[i];
-					} else {
-						if (c.objective[i] < xmin[i])
-							xmin[i] = c.objective[i];
-						if (c.objective[i] > xmax[i])
-							xmax[i] = c.objective[i];
-					}
-				}
-			}
 
 			// Calculate shared fitness
 			SharingFunction sh = new SharingFunction(sigmaShare, alpha);
 			for (Chromosome c : front) {
 				c.setFitness(Fmin - epsilon);
 				double nc = 0;
-				for (Chromosome k : front) {
+				for (Chromosome k : population) {
 					if (decisionSpace) {
 						nc += sh.value(c.solution, k.solution, xmax, xmin);
 					} else {
