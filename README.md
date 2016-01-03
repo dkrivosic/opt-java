@@ -11,3 +11,4 @@ Solving Optimization Problems Using Evolutionary Computation Algorithms in Java 
 - DZ-07 PSO, CLONALG
 - DZ-08 Differential Evolution
 - DZ-09 NSGA
+- DZ-10 NSGA-II
