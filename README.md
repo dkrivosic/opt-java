@@ -14,3 +14,4 @@ Solving Optimization Problems Using Evolutionary Computation Algorithms in Java 
 - DZ-10 NSGA-II
 - DZ-11 Parallelization (GA)
 - DZ-12 Cooperative parallelization (GA)
+- DZ-13 Genetic Programming
